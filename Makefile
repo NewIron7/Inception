@@ -10,7 +10,7 @@ logs:
 	docker logs nginx
 
 stop:
-	@sudo docker-compose -f ./srcs/docker-compose.yml stop
+	@sudo docker compose -f ./srcs/docker-compose.yml stop
 
 clean: stop
 	@sudo docker container stop nginx mariadb wordpress

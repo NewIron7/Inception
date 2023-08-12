@@ -27,4 +27,5 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY tools/configWP.sh configWP.sh
 
-ENTRYPOINT ["bash", "configWP.sh"]
+#ENTRYPOINT ["bash", "configWP.sh"]
+ENTRYPOINT ["bash"]

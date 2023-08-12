@@ -16,10 +16,10 @@ mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' I
 mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
 
 #reload the database
-mysql -e "FLUSH PRIVILEGES;"
+#mysql -e "FLUSH PRIVILEGES;"
 
 #shutdown
 mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
 
 #use exec to 
-exec mysqld_saf
+exec mysqld_safe
