@@ -2,30 +2,27 @@ FROM debian:bullseye
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
-RUN apt-get install -y wget
-RUN apt-get install -y php7.3 php-fpm php-mysql
 
-# a command-line interface for WordPress, you can manage WordPress once it's downloaded
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-	&& chmod +x wp-cli.phar \
-	&& mv wp-cli.phar /usr/local/bin/wp
+RUN apt-get install wget -y
 
-RUN apt-get update && apt-get install -y default-mysql-client
-RUN apt-get install -y mariadb-client
-RUN wget https://wordpress.org/wordpress-6.1.1.tar.gz -P /var/www/html
-RUN cd /var/www/html \
-	&& tar -xzf /var/www/html/wordpress-6.1.1.tar.gz \
-	&& rm /var/www/html/wordpress-6.1.1.tar.gz
+RUN apt-get install php7.4 php-fpm php-mysql mariadb-client -y
 
-# ensure that the web server(nginx) has the necessary permissions to read and execute the files within the web root directory
-RUN chown -R www-data:www-data /var/www/*
-RUN chmod -R 755 /var/www/*
+RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www
+RUN cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
 
-EXPOSE 9000
+RUN chown -R root:root /var/www/wordpress
 
-COPY ./tools/wpscript.sh ./
-RUN chmod +x ./wpscript.sh
+COPY ./conf/php.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-COPY ./tools/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./tools/configWP.sh /configWP.sh
 
-ENTRYPOINT ["bash", "./wpscript.sh"]
+RUN chown -R root:root /var/www/wordpress
+
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
+COPY tools/configWP.sh configWP.sh
+
+ENTRYPOINT ["bash", "configWP.sh"]
