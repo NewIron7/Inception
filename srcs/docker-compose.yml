@@ -15,6 +15,12 @@ services:
     restart: on-failure
     expose:
       - "3306"
+    healthcheck:
+      test: mysqladmin ping --host=localhost -p${SQL_ROOT_PASSWORD}
+      interval: 5s
+      timeout: 1s
+      retries: 20
+      start_period: 5s
 
   nginx:
     image: nginx
@@ -32,6 +38,12 @@ services:
     ports:
       - "443:443"
     restart: on-failure
+    healthcheck:
+      test: 'curl -kfsSL https://localhost/status'
+      interval: 5s
+      timeout: 1s
+      retries: 10
+      start_period: 5s
 
   wordpress:
     image: wordpress
@@ -45,7 +57,8 @@ services:
       context: requirements/wordpress
       dockerfile: Dockerfile
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: on-failure
     expose: 
       - "9000"

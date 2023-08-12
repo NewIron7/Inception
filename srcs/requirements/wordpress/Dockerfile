@@ -27,5 +27,9 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 COPY tools/configWP.sh configWP.sh
 RUN chmod +x configWP.sh
 
+RUN chown -R www-data:www-data /var/www/*
+
+RUN chmod -R 755 /var/www/*
+
 ENTRYPOINT ["bash", "configWP.sh"]
 #ENTRYPOINT ["bash"]
