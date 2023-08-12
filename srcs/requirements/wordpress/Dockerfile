@@ -18,6 +18,8 @@ COPY ./tools/configWP.sh /configWP.sh
 
 RUN chown -R root:root /var/www/wordpress
 
+RUN chmod 777 /var/www
+
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 RUN chmod +x wp-cli.phar
