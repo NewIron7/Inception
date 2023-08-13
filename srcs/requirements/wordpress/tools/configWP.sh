@@ -1,9 +1,9 @@
 #!bin/bash
 
-: <<'END'
 sleep 10
 
-if [ -f ./wp-config.php ]
+<<END
+if [ -f /var/www/wordpress/wp-config.php ]
 then
 	echo "wordpress already downloaded"
 else
