@@ -2,7 +2,7 @@
 
 sleep 10
 
-<<END
+#<<END
 if [ -f /var/www/wordpress/wp-config.php ]
 then
 	echo "wordpress already downloaded"
@@ -15,7 +15,7 @@ else
 	wp user create      --allow-root --role=author $USER1_LOGIN $USER1_MAIL --user_pass=$USER1_PASS --path='/var/www/wordpress' >> /log.txt
 
 fi
-END
+#END
 
 if [ ! -d /run/php ]; then
 	mkdir ./run/php

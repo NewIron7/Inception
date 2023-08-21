@@ -20,12 +20,12 @@ COPY ./tools/configWP.sh /configWP.sh
 RUN chmod 755 /var/www/
 
 #TEST
-#RUN apt-get install curl -y && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN apt-get install curl -y && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-#RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-#RUN chmod +x wp-cli.phar
-#RUN mv wp-cli.phar /usr/local/bin/wp
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY tools/configWP.sh configWP.sh
 RUN chmod +x configWP.sh
