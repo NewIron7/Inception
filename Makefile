@@ -1,6 +1,6 @@
 all: 
-	mkdir -p /home/hboissel/data/mariadb
-	mkdir -p /home/hboissel/data/wordpress
+	mkdir -p /home/${USER}/data/mariadb
+	mkdir -p /home/${USER}/data/wordpress
 	@sudo docker compose -f ./srcs/docker-compose.yml build
 	@sudo docker compose -f ./srcs/docker-compose.yml up -d
 
@@ -17,8 +17,8 @@ clean: stop
 	@sudo docker network rm inception
 
 fclean: clean
-	@sudo rm -rf /home/hboissel/data/mariadb/*
-	@sudo rm -rf /home/hboissel/data/wordpress/*
+	@sudo rm -rf /home/${USER}/data/mariadb/*
+	@sudo rm -rf /home/${USER}/data/wordpress/*
 	@docker system prune -af
 
 re: fclean all

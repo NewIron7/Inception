@@ -9,7 +9,9 @@ RUN apt-get install php7.3 php-fpm php-mysql mariadb-client -y
 
 RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www
 
-RUN cd /var/www && tar -xzf wordpress-6.0.tar.gz && rm wordpress-6.0.tar.gz
+RUN cd /var/www \
+    && tar -xzf wordpress-6.0.tar.gz \
+    && rm wordpress-6.0.tar.gz
 
 RUN chown -R www-data:www-data /var/www/wordpress
 
@@ -20,7 +22,10 @@ COPY ./tools/configWP.sh /configWP.sh
 RUN chmod 755 /var/www/
 
 #TEST
-RUN apt-get install curl -y && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN wget https://wordpress.org/wordpress-6.0.tar.gz
+
+RUN apt-get install curl -y \
+&& curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
@@ -30,6 +35,8 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 COPY tools/configWP.sh configWP.sh
 RUN chmod +x configWP.sh
 
-RUN chmod -R 755 /var/www/*
+RUN chmod -R 755 /var/www/wordpress
+
+EXPOSE 9000 
 
 ENTRYPOINT ["bash", "configWP.sh"]
