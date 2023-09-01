@@ -6,7 +6,7 @@ mysql_install_db
 
 #Check if the database exists
 
-if [ -d "/var/lib/mysql/$MYSQL_DATABASE" ]
+if [ -d "/var/lib/mysql/$SQL_DATABASE" ]
 then 
 
 	echo "Database already exists"
