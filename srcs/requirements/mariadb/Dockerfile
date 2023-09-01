@@ -13,7 +13,7 @@ RUN chmod +x /mariadb.sh
 
 EXPOSE 3306
 
-COPY /conf/wordpress.sql /usr/local/bin/
+COPY /conf/wordpress.sql /usr/local/bin/wordpress.sql
 RUN chmod +x /usr/local/bin/wordpress.sql
 
 ENTRYPOINT ["bash", "mariadb.sh"]
