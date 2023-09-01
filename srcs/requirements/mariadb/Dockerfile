@@ -13,5 +13,10 @@ RUN chmod +x /configDB.sh
 
 EXPOSE 3306
 
-ENTRYPOINT ["bash", "configDB.sh"]
+COPY /conf/wordpress.sql /usr/local/bin/
+RUN chmod +x /usr/local/bin/wordpress.sql
+
+ENTRYPOINT ["bash", "mariadb.sh"]
+
+CMD ["mysqld", "--bind-address=0.0.0.0"]
 #ENTRYPOINT ["bash"]
