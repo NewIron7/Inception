@@ -13,8 +13,8 @@ stop:
 	@sudo docker compose -f ./srcs/docker-compose.yml stop
 
 clean: stop
-	@sudo docker container stop nginx mariadb wordpress
-	@sudo docker network rm inception
+	@-sudo docker container stop nginx mariadb wordpress
+	@-sudo docker network rm inception
 
 fclean: clean
 	@sudo rm -rf /home/hboissel/data/mariadb/*
