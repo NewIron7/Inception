@@ -15,6 +15,11 @@ services:
     restart: on-failure
     expose:
       - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 1s
+      retries: 30
+      start_period: 5s
   
   nginx:
     image: nginx
@@ -51,7 +56,8 @@ services:
       context: requirements/wordpress
       dockerfile: Dockerfile
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: on-failure
     expose: 
       - "9000"
