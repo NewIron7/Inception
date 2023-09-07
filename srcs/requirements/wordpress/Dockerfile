@@ -5,9 +5,9 @@ COPY tools/configWP.sh configWP.sh
 RUN apt-get update -y \
  && apt-get upgrade -y \
  && apt-get install wget -y \
- && apt-get install php7.3 php-fpm php-mysql mariadb-client -y
+ && apt-get install php7.4 php-fpm php-mysql mariadb-client -y
 
-COPY ./conf/php.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./conf/php.conf /etc/php/7.4/fpm/pool.d/www.conf
 
 RUN wget https://wordpress.org/wordpress-6.0.tar.gz -P /var/www \
  && cd /var/www \
