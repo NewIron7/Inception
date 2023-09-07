@@ -1,25 +1,32 @@
 #!/bin/sh
 
-#start my sql service
-service mysql start;
+mysql_install_db
 
-# create a database (if the database does not exist)
-mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
+/etc/init.d/mysql start
 
-# create an user with a password (if the user does not exist)
-mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
+if [ -d "/var/lib/mysql/$SQL_DATABASE" ]
+then 
+	echo "Database already exists"
+else
 
-# give all privileges to the user
-mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
+mysql_secure_installation << _EOF_
 
-#modify sql database
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
+Y
+$SQL_ROOT_PASSWORD
+$SQL_ROOT_PASSWORD
+Y
+n
+Y
+Y
+_EOF_
 
-#reload the database
-mysql -e "FLUSH PRIVILEGES;"
+mysql -uroot -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$SQL_ROOT_PASSWORD'; FLUSH PRIVILEGES;"
 
-#shutdown
-mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
+mysql -uroot -e "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE; GRANT ALL ON $SQL_DATABASE.* TO '$SQL_USER'@'%' IDENTIFIED BY '$SQL_PASSWORD'; FLUSH PRIVILEGES;"
 
-#use exec to 
-exec mysqld_safe
+#mysql -uroot -p$SQL_ROOT_PASSWORD $SQL_DATABASE < /usr/local/bin/wordpress.sql
+fi
+
+/etc/init.d/mysql stop
+
+exec "$@"
