@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 COPY tools/configWP.sh configWP.sh
 
