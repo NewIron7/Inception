@@ -1,5 +1,5 @@
-#FROM debian:bullseye
-FROM debian:buster
+FROM debian:bullseye
+#FROM debian:buster
 
 RUN apt-get update -y \
     && apt-get upgrade -y \
@@ -12,3 +12,4 @@ RUN chmod +x /configDB.sh
 
 ENTRYPOINT ["bash", "configDB.sh"]
 CMD ["mysqld_safe"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
