@@ -1,8 +1,12 @@
 #!/bin/sh
 
-mysql_install_db
+#while true;do
+#	sleep 2;
+#done
 
-/etc/init.d/mysql start
+#mysql_install_db
+
+/etc/init.d/mariadb start
 
 echo "test $SQL_DATABASE"
 
@@ -14,10 +18,11 @@ else
 mysql_secure_installation << _EOF_
 
 Y
+Y
 $SQL_ROOT_PASSWORD
 $SQL_ROOT_PASSWORD
 Y
-n
+Y
 Y
 Y
 _EOF_
@@ -28,6 +33,6 @@ mysql -uroot -e "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE; GRANT ALL ON $SQL_
 
 fi
 
-/etc/init.d/mysql stop
+/etc/init.d/mariadb stop
 
 exec "$@"

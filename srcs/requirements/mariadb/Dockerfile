@@ -12,4 +12,3 @@ RUN chmod +x /configDB.sh
 
 ENTRYPOINT ["bash", "configDB.sh"]
 CMD ["mysqld_safe"]
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
