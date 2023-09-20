@@ -1,11 +1,5 @@
 #!/bin/sh
 
-#while true;do
-#	sleep 2;
-#done
-
-#mysql_install_db
-
 /etc/init.d/mariadb start
 
 echo "test $SQL_DATABASE"
