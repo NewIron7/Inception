@@ -10,4 +10,4 @@ COPY ./tools/configDB.sh ./configDB.sh
 RUN chmod +x /configDB.sh
 
 ENTRYPOINT ["bash", "configDB.sh"]
-CMD ["mysqld_safe"]
+CMD ["mysqld"]
